@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2010 The myBatis Team Licensed under the Apache License, Version 
+	2.0 (the "License"); you may not use this file except in compliance with 
+	the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<context:annotation-config />
+	<!-- enable transaction demarcation with annotations -->
+	<tx:annotation-driven />
+	
+	<!-- mongo -->
+	<import resource="spring-mongo.xml" />
+	
+	<!-- dispatcher -->
+	<bean id="dispatcher" class="edu.ustb.info10.DispatcherWithBFS" init-method="init" scope="singleton">
+		<property name="beginId" value="3515824264" />
+		<property name="numOfUser" value="100000" />
+		<property name="mongoService" ref="mongoService" />
+		<!-- 线程个数  -->
+		<property name="threadNum" value="10" />
+		<property name="tokens">
+			<list>
+				<value>2.007CLAdD0eoGAb33f81f1e33fzrM1D</value>
+				<value>2.00lKvonB0e__RBa48ae2b812dwVgkD</value>
+				<value>2.001sXvcD0aU_DB8ee0d6571d08kSfu</value>
+				<value>2.00M_tzcDhdRlVEae83321c48XHADGE</value>
+				<value>2.00GTdvcDvhfFtCb3856831f3HdPCPB</value>
+				<value>2.00AVyzcD05SqVW827ec20006JmwTxD</value>
+				<value>2.00umevcDAMZGaB2f9eff29b1d61TGC</value>
+				<value>2.00qbzzcDy26YNC641f1df9090h8TOE</value>
+				<value>2.00qYfvcD09yx6q1deae6525bKGM8oD</value>
+				<value>2.003UAAdDYUU2LD272c21f574TyfLuC</value>
+				<value>2.00i7gvcDA92DdB8b55a2434d0kd6pQ</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="jobExcuter" class="edu.ustb.info10.JobExcuter" scope="prototype">
+		<property name="mongoService" ref="mongoService" />
+		<property name="count" value="200" />
+		<property name="minuteToSleep" value="10" />
+		<property name="followersCount" value="300000" />
+	</bean>
+</beans>
